@@ -1,0 +1,21 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_URL:http://user:password@localhost:8761}/eureka/
+server:
+  port: ${PORT:8082}
+logging:
+  level:
+    root: DEBUG
+api:
+  movie:
+    host: ${MOVIE_API_HOST}
+    key: ${MOVIE_API_KEY}
+      
+---
+spring:
+  profiles: heroku
+eureka:
+  instance:
+    hostname: ${DOMAIN_NAME}
+    nonSecurePort: 80
