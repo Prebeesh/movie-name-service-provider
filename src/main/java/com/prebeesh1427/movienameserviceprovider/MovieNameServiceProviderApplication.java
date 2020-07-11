@@ -11,10 +11,5 @@ public class MovieNameServiceProviderApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(MovieNameServiceProviderApplication.class, args);
 	}
-	
-	@Bean
-	public RestTemplate getRestTemplate() {
-		return new RestTemplate();
-	}
 
 }
