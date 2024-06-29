@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.3.0.RELEASE</version>
+		<version>3.2.4</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.prebeesh1427</groupId>
@@ -15,8 +15,8 @@
 	<description>Gives the movie list and the availabilities based on the incoming movie string</description>
 
 	<properties>
-		<java.version>1.8</java.version>
-		<spring-cloud.version>Hoxton.SR4</spring-cloud.version>
+		<java.version>22</java.version>
+		<spring-cloud.version>2023.0.1</spring-cloud.version>
 	</properties>
 
 	<dependencies>
