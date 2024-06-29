@@ -76,7 +76,6 @@ public class MovieServiceImpl implements MovieService{
 
 	private void prepareHeader(HttpHeaders header) {
 		logger.debug("Setting the Header");
-//		header.setContentType(MediaType.APPLICATION_JSON);
 		header.add("X-RapidAPI-Host", host);
 		header.add("X-RapidAPI-Key", key);
 		header.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
