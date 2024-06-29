@@ -1,7 +1,14 @@
 eureka:
+  instance:
+    hostname: localhost
   client:
+    registerWithEureka: true
+    fetchRegistry: true
     serviceUrl:
-      defaultZone: ${EUREKA_URL:http://user:password@localhost:8761}/eureka/
+      defaultZone: http://admin:password@localhost:8761/eureka
+spring:
+  application:
+    name: MovieNameService
 server:
   port: ${PORT:8082}
 logging:
@@ -9,13 +16,6 @@ logging:
     root: DEBUG
 api:
   movie:
-    host: ${MOVIE_API_HOST}
-    key: ${MOVIE_API_KEY}
-      
----
-spring:
-  profiles: heroku
-eureka:
-  instance:
-    hostname: ${DOMAIN_NAME}
-    nonSecurePort: 80
+    host: ${MOVIE_API_HOST:utelly-tv-shows-and-movies-availability-v1.p.rapidapi.com}
+    key: ${MOVIE_API_KEY:73d2462b06msh36f6ae5ffb639a1p1c4ca5jsn4dcd87325c36}
+
