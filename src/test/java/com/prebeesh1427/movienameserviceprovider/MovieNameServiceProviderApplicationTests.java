@@ -1,4 +1,4 @@
-package com.prebeesh1427.MovieNameServiceProvider;
+package com.prebeesh1427.movienameserviceprovider;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
