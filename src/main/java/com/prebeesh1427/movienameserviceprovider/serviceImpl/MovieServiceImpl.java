@@ -54,7 +54,6 @@ public class MovieServiceImpl implements MovieService{
 					requestEntity,
                     MovieSearchResultsDto.class);
 			logger.info(String.format("Result is %s", apiResult));
-//			return new ResponseEntity<>(HttpStatus.SERVICE_UNAVAILABLE);
 			return new ResponseEntity<>(apiResult.getBody(),HttpStatus.OK);
 		}catch (Exception e) {
 			logger.error("Exception occured while calling the API "+ e);
