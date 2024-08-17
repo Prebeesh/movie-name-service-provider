@@ -6,5 +6,5 @@ import com.prebeesh1427.movienameserviceprovider.dto.MovieSearchResultsDto;
 
 public interface MovieService {
 	
-	public ResponseEntity<MovieSearchResultsDto> getMovies(String searchText, String countryCode);
+	ResponseEntity<MovieSearchResultsDto> getMovies(String searchText, String countryCode);
 }
