@@ -1,11 +1,9 @@
 package com.prebeesh1427.movienameserviceprovider.serviceImpl;
 
 import java.util.Collections;
-import java.util.Objects;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
@@ -44,9 +42,7 @@ public class MovieServiceImpl implements MovieService{
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		String url = prepareUrl(searchText,countryCode);
-		HttpHeaders header = new HttpHeaders();
-		prepareHeader(header);
-		HttpEntity<String> requestEntity = new HttpEntity<>(header);
+		HttpEntity<String> requestEntity = new HttpEntity<>(prepareHeader(new HttpHeaders()));
 		try {
 			logger.info("Calling the API for movie info");
 			ResponseEntity<MovieSearchResultsDto> apiResult = restClient.exchange(url,
@@ -74,12 +70,12 @@ public class MovieServiceImpl implements MovieService{
 		return true;
 	}
 
-	private void prepareHeader(HttpHeaders header) {
+	private HttpHeaders prepareHeader(HttpHeaders header) {
 		logger.debug("Setting the Header");
 		header.add("X-RapidAPI-Host", host);
 		header.add("X-RapidAPI-Key", key);
 		header.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
-		
+		return header;
 	}
 
 }
