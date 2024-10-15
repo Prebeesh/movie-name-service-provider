@@ -15,18 +15,17 @@ import com.prebeesh1427.movienameserviceprovider.dto.MovieSearchResultsDto;
 
 @RestController
 public class MovieController {
-	
-	
-	@Autowired
-	private MovieService movieService;
 
-	Logger logger = LoggerFactory.getLogger(MovieController.class);
+	private static final Logger logger = LoggerFactory.getLogger(MovieController.class);
+
+	private final MovieService movieService;
+	public MovieController(MovieService movieService) {
+		this.movieService=movieService;
+	}
 
 	@GetMapping(path = "movies/{searchText}/{countryCode}")
 	public ResponseEntity<MovieSearchResultsDto> getMovies(@PathVariable("searchText") String searchText, @PathVariable("countryCode") String countryCode) {
-		
-		ResponseEntity<MovieSearchResultsDto>  response = movieService.getMovies(searchText, countryCode);
-		logger.debug("Returning the data from controller");
-		return response;
+		logger.info(String.format("Received a request with searchText: %s, countryCode: %s", searchText, countryCode));
+		return movieService.getMovies(searchText, countryCode);
 	}
 }

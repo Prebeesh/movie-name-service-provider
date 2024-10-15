@@ -2,7 +2,7 @@ package com.prebeesh1427.movienameserviceprovider.dto;
 
 
 
-class ExternalId{
+public class ExternalId{
 	
 	private IdAndUrl imdb;
 	private IdAndUrl tmdb;
@@ -34,28 +34,6 @@ class ExternalId{
 
 	public void setWiki_data(IdAndUrl wiki_data) {
 		this.wiki_data = wiki_data;
-	}
-
-	class IdAndUrl{
-		private String url;
-		private String id;
-		
-		public IdAndUrl() {
-			
-		}
-		public String getUrl() {
-			return url;
-		}
-		public void setUrl(String url) {
-			this.url = url;
-		}
-		public String getId() {
-			return id;
-		}
-		public void setId(String id) {
-			this.id = id;
-		}
-			
 	}
 }
 

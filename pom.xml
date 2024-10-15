@@ -6,17 +6,19 @@
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>3.2.4</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<relativePath/>
 	</parent>
 	<groupId>com.prebeesh1427</groupId>
 	<artifactId>MovieNameServiceProvider</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>MovieNameServiceProvider</name>
-	<description>Gives the movie list and the availabilities based on the incoming movie string</description>
+	<description>Gives the movies list and the streaming availabilities</description>
 
 	<properties>
 		<java.version>22</java.version>
 		<spring-cloud.version>2023.0.1</spring-cloud.version>
+		<openapi-generator-version>7.7.0</openapi-generator-version>
+		<movies-db-contract>https://raw.githubusercontent.com/movieofthenight/streaming-availability-api/727913293260755d945c34b83b92784163cb1088/openapi.yaml</movies-db-contract>
 	</properties>
 
 	<dependencies>
@@ -28,22 +30,67 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
-		</dependency>
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
-			<exclusions>
-				<exclusion>
-					<groupId>org.junit.vintage</groupId>
-					<artifactId>junit-vintage-engine</artifactId>
-				</exclusion>
-			</exclusions>
 		</dependency>
+		<dependency>
+			<groupId>org.openapitools</groupId>
+			<artifactId>jackson-databind-nullable</artifactId>
+			<version>0.2.6</version>
+		</dependency>
+		<dependency>
+			<groupId>jakarta.validation</groupId>
+			<artifactId>jakarta.validation-api</artifactId>
+			<version>3.1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>io.swagger.core.v3</groupId>
+			<artifactId>swagger-annotations-jakarta</artifactId>
+			<version>2.2.22</version>
+		</dependency>
+		<dependency>
+			<groupId>io.github.openfeign</groupId>
+			<artifactId>feign-core</artifactId>
+			<version>12.1</version>
+		</dependency>
+		<dependency>
+			<groupId>io.github.openfeign</groupId>
+			<artifactId>feign-okhttp</artifactId>
+			<version>12.1</version>
+		</dependency>
+		<!-- OkHttp -->
+		<dependency>
+			<groupId>com.squareup.okhttp3</groupId>
+			<artifactId>okhttp</artifactId>
+			<version>4.10.0</version>
+		</dependency>
+		<dependency>
+			<groupId>io.github.openfeign</groupId>
+			<artifactId>feign-jackson</artifactId>
+			<version>12.1</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.14.2</version>
+		</dependency>
+		<dependency>
+			<groupId>io.github.openfeign.form</groupId>
+			<artifactId>feign-form</artifactId>
+			<version>3.8.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-openfeign</artifactId>
+		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>org.springframework.cloud</groupId>-->
+<!--			<artifactId>spring-cloud-starter-feign</artifactId>-->
+<!--		</dependency>-->
+
 	</dependencies>
 
 	<dependencyManagement>
@@ -64,6 +111,76 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+			<plugin>
+				<groupId>org.openapitools</groupId>
+				<artifactId>openapi-generator-maven-plugin</artifactId>
+				<version>${openapi-generator-version}</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+						<configuration>
+							<inputSpec>${movies-db-contract}</inputSpec>
+							<generatorName>java</generatorName>
+							<library>feign</library>
+							<apiPackage>com.prebeesh1427.movienameserviceprovider.client</apiPackage>
+							<modelPackage>com.prebeesh1427.movienameserviceprovider.model</modelPackage>
+							<generateApiTests>false</generateApiTests>
+							<generateModelTests>false</generateModelTests>
+							<configOptions>
+								<useJakartaEe>true</useJakartaEe>
+								<interfaceOnly>true</interfaceOnly>
+								<dateLibrary>java8</dateLibrary>
+							</configOptions>
+
+
+
+<!--							<generatorName>spring</generatorName>-->
+<!--							<generateApis>true</generateApis>-->
+<!--							<apiPackage>com.prebeesh1427.movienameserviceprovider.client</apiPackage>-->
+<!--							<configOptions>-->
+<!--								<delegatePattern>true</delegatePattern>-->
+<!--								<interfaceOnly>true</interfaceOnly>-->
+<!--								<library>spring-cloud</library>-->
+<!--								<useJakartaEe>true</useJakartaEe>-->
+<!--&lt;!&ndash;								<useFeignClient>true</useFeignClient>&ndash;&gt;-->
+<!--								<sourceFolder>src/gen/java/main</sourceFolder>-->
+<!--&lt;!&ndash;								<useSpringBoot3>true</useSpringBoot3>&ndash;&gt;-->
+<!--&lt;!&ndash;								<interfaceOnly>true</interfaceOnly>&ndash;&gt;-->
+<!--							</configOptions>-->
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+<!--					<plugin>-->
+<!--						<groupId>io.swagger.codegen.v3</groupId>-->
+<!--						<artifactId>swagger-codegen-maven-plugin</artifactId>-->
+<!--						<version>3.0.62</version> &lt;!&ndash; Make sure this is the latest available version &ndash;&gt;-->
+<!--						<executions>-->
+<!--							<execution>-->
+<!--								<goals>-->
+<!--									<goal>generate</goal>-->
+<!--								</goals>-->
+<!--								<configuration>-->
+<!--									<inputSpec>${movies-db-contract}</inputSpec> &lt;!&ndash; Path to your OpenAPI/Swagger spec &ndash;&gt;-->
+<!--									<language>spring</language> &lt;!&ndash; Use 'spring' for Spring-based generation &ndash;&gt;-->
+<!--									<generateApis>true</generateApis> &lt;!&ndash; Generate Feign clients (API interfaces) &ndash;&gt;-->
+<!--									<generateModels>true</generateModels> &lt;!&ndash; Optionally skip model generation &ndash;&gt;-->
+<!--									<apiPackage>com.prebeesh1427.movienameserviceprovider.client</apiPackage> &lt;!&ndash; Define your package &ndash;&gt;-->
+<!--									<configOptions>-->
+<!--										<library>spring-cloud</library> &lt;!&ndash; Use spring-cloud for Feign support &ndash;&gt;-->
+<!--										<interfaceOnly>true</interfaceOnly> &lt;!&ndash; Generate only Feign interfaces &ndash;&gt;-->
+<!--										<useFeignClient>true</useFeignClient> &lt;!&ndash; This enables Feign client generation &ndash;&gt;-->
+<!--										<useSpringBoot3>true</useSpringBoot3> &lt;!&ndash; Spring Boot 3 support &ndash;&gt;-->
+<!--										<sourceFolder>src/gen/java/main</sourceFolder> &lt;!&ndash; Target folder for generated code &ndash;&gt;-->
+<!--									</configOptions>-->
+<!--								</configuration>-->
+<!--							</execution>-->
+<!--						</executions>-->
+<!--					</plugin>-->
+
 		</plugins>
 	</build>
 
