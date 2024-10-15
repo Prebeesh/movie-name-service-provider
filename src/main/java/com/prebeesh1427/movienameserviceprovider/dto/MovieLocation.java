@@ -1,6 +1,6 @@
 package com.prebeesh1427.movienameserviceprovider.dto;
 
-class MovieLocation{
+public class MovieLocation{
 	
 	private String icon;
 	private String id;

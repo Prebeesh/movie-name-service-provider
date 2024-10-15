@@ -5,6 +5,7 @@ import java.util.Collections;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Primary;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -15,19 +16,20 @@ import com.prebeesh1427.movienameserviceprovider.data.CountryCode;
 import com.prebeesh1427.movienameserviceprovider.dto.MovieSearchResultsDto;
 
 @Service
-public class MovieServiceImpl implements MovieService{
+@Primary
+public class UtellyMovieServiceImpl implements MovieService{
 
-	private static final Logger logger = LoggerFactory.getLogger(MovieServiceImpl.class);
+	private static final Logger logger = LoggerFactory.getLogger(UtellyMovieServiceImpl.class);
 
 	private final RestTemplate restClient;
 
 	private final CountryCode countryCodeList;
 	private final String host, key;
 	
-	public MovieServiceImpl(RestTemplate restClient,
-							CountryCode countryCodeList,
-							@Value("${api.movie.host}") String host,
-							@Value("${api.movie.key}") String key) {
+	public UtellyMovieServiceImpl(RestTemplate restClient,
+								  CountryCode countryCodeList,
+								  @Value("${api.movie.host}") String host,
+								  @Value("${api.movie.key}") String key) {
 		this.restClient=restClient;
 		this.countryCodeList=countryCodeList;
 		this.host=host;

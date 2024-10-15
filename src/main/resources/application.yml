@@ -8,6 +8,7 @@ logging:
     root: INFO
 api:
   movie:
-    host: ${MOVIE_API_HOST:utelly-tv-shows-and-movies-availability-v1.p.rapidapi.com}
+#    host: ${MOVIE_API_HOST:streaming-availability.p.rapidapi.com}
     key: ${MOVIE_API_KEY:73d2462b06msh36f6ae5ffb639a1p1c4ca5jsn4dcd87325c36}
+    host: ${MOVIE_API_HOST:utelly-tv-shows-and-movies-availability-v1.p.rapidapi.com}
 
