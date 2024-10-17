@@ -23,7 +23,7 @@ import org.springframework.web.client.RestTemplate;
 import java.util.Collections;
 
 @Service
-//@Primary
+@Primary
 public class MovieOfTheNightServiceImpl implements MovieService{
 
 	private static final Logger logger = LoggerFactory.getLogger(MovieOfTheNightServiceImpl.class);
