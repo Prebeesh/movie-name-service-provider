@@ -16,7 +16,7 @@ import com.prebeesh1427.movienameserviceprovider.data.CountryCode;
 import com.prebeesh1427.movienameserviceprovider.dto.MovieSearchResultsDto;
 
 @Service
-@Primary
+//@Primary
 public class UtellyMovieServiceImpl implements MovieService{
 
 	private static final Logger logger = LoggerFactory.getLogger(UtellyMovieServiceImpl.class);
