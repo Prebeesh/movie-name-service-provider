@@ -1,5 +1,7 @@
 package com.prebeesh1427.movienameserviceprovider.dto;
 
+import java.util.Objects;
+
 public class MovieLocation{
 	
 	private String icon;
@@ -41,5 +43,18 @@ public class MovieLocation{
 	}
 	public void setUrl(String url) {
 		this.url = url;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		MovieLocation that = (MovieLocation) o;
+		return Objects.equals(getDisplay_name(), that.getDisplay_name()) && Objects.equals(getUrl(), that.getUrl());
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(getDisplay_name(), getUrl());
 	}
 }
