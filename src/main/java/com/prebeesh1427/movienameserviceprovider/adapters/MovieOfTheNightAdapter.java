@@ -7,7 +7,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Component
 public class MovieOfTheNightAdapter {
@@ -35,8 +37,8 @@ public class MovieOfTheNightAdapter {
         return results;
     }
 
-    private List<MovieLocation> getMovieLocations(Show show) {
-        var result = new ArrayList<MovieLocation>();
+    private Set<MovieLocation> getMovieLocations(Show show) {
+        var result = new HashSet<MovieLocation>();
         show.getStreamingOptions().forEach((country, location ) -> {
             location.forEach((streamingOption) -> {
                 var movieLocation = new MovieLocation();

@@ -1,9 +1,6 @@
 package com.prebeesh1427.movienameserviceprovider.dto;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -15,7 +12,7 @@ public class MoviesDto {
 	private String name;
 	private String picture;
 	@JsonInclude(value = Include.NON_EMPTY)
-	private List<MovieLocation> locations = new ArrayList<MovieLocation>();
+	private Set<MovieLocation> locations = new HashSet<>();
 	@JsonInclude(value = Include.NON_EMPTY)
 	private ExternalId external_ids; 
 	
@@ -61,12 +58,12 @@ public class MoviesDto {
 	}
 
 
-	public List<MovieLocation> getLocations() {
+	public Set<MovieLocation> getLocations() {
 		return locations;
 	}
 
 
-	public void setLocations(List<MovieLocation> locations) {
+	public void setLocations(Set<MovieLocation> locations) {
 		this.locations = locations;
 	}
 	
