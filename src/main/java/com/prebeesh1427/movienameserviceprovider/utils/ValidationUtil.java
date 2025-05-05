@@ -6,11 +6,11 @@ import org.springframework.util.StringUtils;
 public final class ValidationUtil {
     private ValidationUtil() {}
 
-    public static boolean isValidSearchText(String searchText) {
+    public static boolean isValidSearchText(final String searchText) {
         return StringUtils.hasText(searchText);
     }
 
-    public static boolean isValidCountryCode(String counrtyCode) {
-        return Country.fromCode(counrtyCode).isPresent();
+    public static boolean isValidCountryCode(final String countryCode) {
+        return countryCode != null && Country.fromCode(countryCode).isPresent();
     }
 }

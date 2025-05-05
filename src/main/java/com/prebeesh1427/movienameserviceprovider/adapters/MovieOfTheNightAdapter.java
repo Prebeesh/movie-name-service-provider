@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Component
@@ -16,69 +17,84 @@ public class MovieOfTheNightAdapter {
 
     private static final Logger log = LoggerFactory.getLogger(MovieOfTheNightAdapter.class);
 
-    public MovieSearchResultsDto transform(List<Show> shows) {
+    /**
+     * Transforms a list of Show objects into a MovieSearchResultsDto.
+     *
+     * @param shows the list of shows to transform
+     * @return a MovieSearchResultsDto containing the transformed movies, or an empty result if input is null/empty
+     */
+    public MovieSearchResultsDto transform(final List<Show> shows) {
         if (shows == null || shows.isEmpty()) {
             log.debug("No results for search");
-            return null;
+            return new MovieSearchResultsDto();
         }
-        List<MoviesDto> movies = new ArrayList<>();
-        for(var show : shows) {
-            var movie = new MoviesDto();
+        final List<MoviesDto> movies = new ArrayList<>();
+        for (final Show show : shows) {
+            final MoviesDto movie = new MoviesDto();
             movie.setId(show.getId());
             movie.setName(show.getTitle());
-            movie.setPicture(show.getImageSet().getHorizontalPoster().getW480());
+            movie.setPicture(Optional.ofNullable(show.getImageSet())
+                    .map(imgSet -> imgSet.getHorizontalPoster())
+                    .map(poster -> poster.getW480())
+                    .orElse(null));
             movie.setExternal_ids(getExternalIds(show));
             movie.setLocations(getMovieLocations(show));
             movies.add(movie);
         }
 
-        var results = new MovieSearchResultsDto();
+        final MovieSearchResultsDto results = new MovieSearchResultsDto();
         results.setResults(movies);
         return results;
     }
 
-    private Set<MovieLocation> getMovieLocations(Show show) {
-        var result = new HashSet<MovieLocation>();
-        show.getStreamingOptions().forEach((country, location ) -> {
-            location.forEach((streamingOption) -> {
-                var movieLocation = new MovieLocation();
+    private Set<MovieLocation> getMovieLocations(final Show show) {
+        final Set<MovieLocation> result = new HashSet<>();
+        if (show == null || show.getStreamingOptions() == null) {
+            return result;
+        }
+        show.getStreamingOptions().forEach((country, locations) -> {
+            locations.forEach(streamingOption -> {
+                final MovieLocation movieLocation = new MovieLocation();
                 movieLocation.setUrl(streamingOption.getLink());
-                movieLocation.setName(streamingOption.getService().getName());
-                movieLocation.setIcon(streamingOption.getService().getImageSet().getLightThemeImage());
+                movieLocation.setName(Optional.ofNullable(streamingOption.getService())
+                        .map(service -> service.getName())
+                        .orElse(null));
+                movieLocation.setIcon(Optional.ofNullable(streamingOption.getService())
+                        .map(service -> service.getImageSet())
+                        .map(imageSet -> imageSet.getLightThemeImage())
+                        .orElse(null));
                 result.add(movieLocation);
             });
         });
         return result;
     }
 
-    private ExternalId getExternalIds(Show show) {
+    private ExternalId getExternalIds(final Show show) {
         if (show == null) {
             log.debug("No show to convert");
             return null;
         }
-        var externalId = new ExternalId();
-        var imdbIdAndUrl = new IdAndUrl();
-        String imdbId = show.getImdbId();
+        final ExternalId externalId = new ExternalId();
+        final IdAndUrl imdbIdAndUrl = new IdAndUrl();
+        final String imdbId = show.getImdbId();
         if (imdbId != null) {
             imdbIdAndUrl.setId(imdbId);
             imdbIdAndUrl.setUrl("https://www.imdb.com/title/" + imdbId);
         }
         externalId.setImdb(imdbIdAndUrl);
 
-        var tmdbIdAndUrl = new IdAndUrl();
-        String tmdbId = show.getTmdbId();
+        final IdAndUrl tmdbIdAndUrl = new IdAndUrl();
+        final String tmdbId = show.getTmdbId();
         if (tmdbId != null) {
             tmdbIdAndUrl.setId(tmdbId);
             tmdbIdAndUrl.setUrl("https://www.themoviedb.org/movie/" + tmdbId);
         }
         externalId.setTmdb(tmdbIdAndUrl);
 
-        var wikiDataIdAndUrl = new IdAndUrl();
-        String wikiDataId = "https://www.wikidata.org/wiki/Q11424";
-        if (wikiDataId != null) {
-            wikiDataIdAndUrl.setId(wikiDataId);
-            wikiDataIdAndUrl.setUrl("https://www.wikidata.org/wiki/" + wikiDataId);
-        }
+        final IdAndUrl wikiDataIdAndUrl = new IdAndUrl();
+        final String wikiDataId = "Q11424";
+        wikiDataIdAndUrl.setId(wikiDataId);
+        wikiDataIdAndUrl.setUrl("https://www.wikidata.org/wiki/" + wikiDataId);
         externalId.setWiki_data(wikiDataIdAndUrl);
 
         return externalId;

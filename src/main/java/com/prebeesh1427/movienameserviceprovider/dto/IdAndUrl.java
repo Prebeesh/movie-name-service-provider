@@ -1,25 +1,15 @@
 package com.prebeesh1427.movienameserviceprovider.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class IdAndUrl {
-
-        private String url;
-        private String id;
-
-        public IdAndUrl() {
-
-        }
-        public String getUrl() {
-            return url;
-        }
-        public void setUrl(String url) {
-            this.url = url;
-        }
-        public String getId() {
-            return id;
-        }
-        public void setId(String id) {
-            this.id = id;
-        }
-
-
+    private String url;
+    private String id;
 }

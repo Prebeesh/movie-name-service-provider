@@ -66,7 +66,7 @@ public class UtellyMovieServiceImpl implements MovieService{
 	}
 
 	private boolean isInValid(String searchText, String countryCode) {
-		if(StringUtils.hasText(searchText) && countryCodeList.contains(countryCode)) {
+		if(StringUtils.hasText(searchText) && countryCodeList.isSupported(countryCode)) {
 			return false;
 		}
 		return true;

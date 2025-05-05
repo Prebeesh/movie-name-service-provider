@@ -1,60 +1,34 @@
 package com.prebeesh1427.movienameserviceprovider.data;
 
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+import org.springframework.stereotype.Component;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.springframework.stereotype.Component;
 
 @Component
+@Getter
+@ToString
+@EqualsAndHashCode
+@AllArgsConstructor
+@NoArgsConstructor
 public class CountryCode {
+	private Set<String> countryCodes = createDefaultCountryCodes();
 
-	private Set<String> countryCodes;
-	
-	public CountryCode(){
-		countryCodes = new HashSet<>();
-		countryCodes.add("in");
-		countryCodes.add("us");
-		countryCodes.add("uk");
-		countryCodes.add("ar");
-		countryCodes.add("at");
-		countryCodes.add("au");
-		countryCodes.add("be");
-		countryCodes.add("br");
-		countryCodes.add("ca");
-		countryCodes.add("ch");
-		countryCodes.add("cz");
-		countryCodes.add("dk");
-		countryCodes.add("de");
-		countryCodes.add("ee");
-		countryCodes.add("es");
-		countryCodes.add("fr");
-		countryCodes.add("hk");
-		countryCodes.add("hu");
-		countryCodes.add("ie");
-		countryCodes.add("il");
-		countryCodes.add("is");
-		countryCodes.add("it");
-		countryCodes.add("jp");
-		countryCodes.add("kr");
-		countryCodes.add("lt");
-		countryCodes.add("lv");
-		countryCodes.add("mx");
-		countryCodes.add("nl");
-		countryCodes.add("no");
-		countryCodes.add("nz");
-		countryCodes.add("ph");
-		countryCodes.add("pl");
-		countryCodes.add("pt");
-		countryCodes.add("ro");
-		countryCodes.add("ru");
-		countryCodes.add("se");
-		countryCodes.add("sg");
-		countryCodes.add("sk");
-		countryCodes.add("th");
-		countryCodes.add("za");
+	public boolean isSupported(String code) {
+		return countryCodes.contains(code);
+	}
+
+	public Set<String> getCountryCodes() {
+		return countryCodes;
 	}
 	
-	public boolean contains(String code) {
-		return countryCodes.contains(code);
+	private static Set<String> createDefaultCountryCodes() {
+		return Set.of("in", "us", "uk", "ar", "at", "au", "be", "br", "ca", "ch", "cz", "dk", "de", "ee", "es", "fr", "hk", "hu", "ie", "il", "is", "it", "jp", "kr", "lt", "lv", "mx", "nl", "no", "nz", "ph", "pl", "pt", "ro", "ru", "se", "sg", "sk", "th", "za");
 	}
 }
